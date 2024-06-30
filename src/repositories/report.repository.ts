@@ -5,7 +5,9 @@ import ReportInterface from '../interfaces/report.interface';
 const SPECIAL_REPORT_THRESHOLD = 3;
 
 function getAll() {
-	return db.query('SELECT * FROM reports') as ReportInterface[];
+	return db.query(
+		'SELECT *, (SELECT name FROM projects WHERE id=reports.projectid) AS project_name FROM reports',
+	) as ReportInterface[];
 }
 
 function create(text: string, projectId: string) {
@@ -23,6 +25,12 @@ function findById(id: string) {
 	}
 
 	return result[0] as ReportInterface;
+}
+
+function findByProjectId(projectId: string) {
+	return db.query('SELECT * FROM reports WHERE projectid=@projectId', {
+		projectId,
+	}) as ReportInterface[];
 }
 
 function remove(id: string) {
@@ -60,4 +68,12 @@ function hasFrequentWords(item: ReportInterface) {
 	return false;
 }
 
-export default { getAll, create, findById, remove, update, specialReport };
+export default {
+	getAll,
+	create,
+	findById,
+	findByProjectId,
+	remove,
+	update,
+	specialReport,
+};

@@ -20,6 +20,11 @@ function findById(req: Request, res: Response) {
 	res.json({ status: 'success', data: result });
 }
 
+function findByProjectId(req: Request, res: Response) {
+	const result = reportRepository.findByProjectId(req.params.projectId);
+	res.json({ status: 'success', data: result });
+}
+
 function remove(req: Request, res: Response) {
 	reportRepository.remove(req.params.id);
 	res.json({ status: 'success', message: 'Delete successfully!' });
@@ -35,4 +40,12 @@ function specialReport(req: Request, res: Response) {
 	res.json({ status: 'success', data: result });
 }
 
-export default { getAll, create, findById, remove, update, specialReport };
+export default {
+	getAll,
+	create,
+	findById,
+	findByProjectId,
+	remove,
+	update,
+	specialReport,
+};
