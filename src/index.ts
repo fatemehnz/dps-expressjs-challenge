@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import accessLog from './services/log.service';
 import projectRoute from './routes/project.route';
 import reportRoute from './routes/report.routets';
+import authMiddleware from './middleware/auth.middleware';
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ const port = process.env.PORT || 3000;
 
 app.use(accessLog);
 app.use(express.json());
+app.use(authMiddleware);
 app.use('/projects', projectRoute);
 app.use('/reports', reportRoute);
 
