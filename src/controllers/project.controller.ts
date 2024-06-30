@@ -13,6 +13,10 @@ function create(req: Request, res: Response) {
 
 function findById(req: Request, res: Response) {
 	const result = projectRepository.findById(req.params.id);
+	if (result === null) {
+		res.status(404).json({ status: 'not_fount' });
+		return;
+	}
 	res.json({ status: 'success', data: result });
 }
 
